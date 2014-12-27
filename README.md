@@ -8,7 +8,7 @@ This uses the Decorator pattern so select or epoll or any other implementation o
 ````C++
 SelectSocketMonitorImp imp(new SocketMonitorCallBackCounted, ServerConnectionFactory.getConnection());
 SocketMonitor monitor;
-monitor.setSocketMonitorImp(&imp)
+monitor.setSocketMonitorImp(&imp);
 ````
   
 I also created a callback system
