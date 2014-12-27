@@ -6,7 +6,7 @@
 
 namespace CppSocket
 {
-	class __DLL__ ServerConnectionFactory : public ConnectionFactory
+	class ServerConnectionFactory : public ConnectionFactory
 	{
 	private:
 		struct addrinfo m_hints, *m_result, *m_pointer;
@@ -19,11 +19,11 @@ namespace CppSocket
 		void getAddrInfo();
 		void initConstructor();
 	public:
-        ServerConnectionFactory( int port_in);//, SOCK conn_type);
-		ServerConnectionFactory( int port_in, SocketType::SocketTypes conn_type);
-		ServerConnectionFactory( std::string port_in, SocketType::SocketTypes conn_type);
+		__DLL__ ServerConnectionFactory(int port_in);//, SOCK conn_type);
+		__DLL__ ServerConnectionFactory(int port_in, SocketType::SocketTypes conn_type);
+		__DLL__ ServerConnectionFactory(std::string *port_in, SocketType::SocketTypes conn_type);
     
-		Listener getConnection();
+		Listener __DLL__ getConnection();
     
 
         

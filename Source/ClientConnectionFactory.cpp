@@ -9,16 +9,17 @@
 
 namespace CppSocket
 {
-    ClientConnectionFactory::ClientConnectionFactory(  std::string hostname_in, int port_in, SocketType::SocketTypes sock_enum_in)
+    ClientConnectionFactory::ClientConnectionFactory(std::string *hostname_in, int port_in, SocketType::SocketTypes sock_enum_in)
         :ConnectionFactory()
     {
         setSockType(sock_enum_in);
-        setPort(to_string(port_in));
+		std::string port = to_string(port_in);
+		setPort(&port);
         setHost(hostname_in);
         initConstructor();
     }
 
-    ClientConnectionFactory::ClientConnectionFactory(  std::string hostname_in, std::string port_in, SocketType::SocketTypes sock_enum_in)
+    ClientConnectionFactory::ClientConnectionFactory(std::string *hostname_in, std::string *port_in, SocketType::SocketTypes sock_enum_in)
         :ConnectionFactory()
     {
         setSockType(sock_enum_in);

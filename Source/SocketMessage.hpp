@@ -18,9 +18,12 @@ namespace CppSocket
 		SocketMessage();
 		SocketMessage(const SocketMessage &msg_in);
 		SocketMessage(const std::string& string_in, const size_t& sock_in );
+		SocketMessage(std::string str_in);
 		~SocketMessage();
 
 		void setMessage(const std::string& string_in);
+		void appendMessage(std::string* string_in);
+		void appendMessage(std::string string_in);
 		void setSock(const size_t& sock_in);
 	
 		size_t getLen();

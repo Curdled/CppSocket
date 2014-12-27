@@ -16,7 +16,7 @@ namespace CppSocket
 	public:
 		Listener();
 		Connection getConnection();
-
+		void closeSocket();
 		size_t getSocket(){return m_sock_fd;};
 	private:
 		

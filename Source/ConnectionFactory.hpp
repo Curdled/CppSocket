@@ -10,33 +10,27 @@
 
 namespace CppSocket
 {
-	class __DLL__ ConnectionFactory
+	class  ConnectionFactory
 	{
 	private:
-		std::string *m_host, *m_port;
+		std::string m_host, m_port;
 		SocketType::SocketTypes m_socktype;
 	public:
 
-//		enum SOCK
-//		{
-//			TCP_SOCK,
-//			UDP_SOCK
-//		};
-
-		ConnectionFactory();
-		~ConnectionFactory();
+		__DLL__ ConnectionFactory();
+		
   
-		void setPort( std::string port_in );
-		void setHost (std::string host_in);
+		void __DLL__ setPort(std::string *port_in);
+		void __DLL__ setHost(std::string *host_in);
     
 		//virtual Connection getConnection() =0;
 
-		std::string getPort();
+		std::string __DLL__ getPort();
 	
-		std::string getHost();
-		protected:
-		void setSockType( SocketType::SocketTypes sock_in);
-		SocketType::SocketTypes getSockType();
+		std::string __DLL__ getHost();
+		
+		void __DLL__ setSockType(SocketType::SocketTypes sock_in);
+		__DLL__ SocketType::SocketTypes getSockType();
 	};
 };
 

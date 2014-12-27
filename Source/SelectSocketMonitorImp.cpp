@@ -1,22 +1,32 @@
-#include "Select.hpp"
-#include "SelectCallBack.hpp"
+#include "SelectSocketMonitorImp.hpp"
+#include "SocketMonitorCallBack.hpp"
 
 namespace CppSocket
 {
-	Select::Select()
+	SelectSocketMonitorImp::SelectSocketMonitorImp(SocketMonitorCallBack *call_back_in)
 	{
+		m_call_back = call_back_in;
 		initConstructor();
 	}
-	Select::Select(Listener list_in)
+	SelectSocketMonitorImp::SelectSocketMonitorImp(SocketMonitorCallBack *call_back_in, Listener list_in)
 	{
+		m_call_back = call_back_in;
 		m_listener = list_in;
 		m_max_len = m_listener.getSocket();
 		initConstructor();
 	}
-
-	void Select::initConstructor()
+	SelectSocketMonitorImp::~SelectSocketMonitorImp()
 	{
-        m_call_back = new SelectCallBack(NULL);
+		m_listener.closeSocket();
+		delete m_conn_list;
+		delete m_iter_conn_list;
+		delete m_call_back;
+		
+	}
+
+	void SelectSocketMonitorImp::initConstructor()
+	{
+      //  m_call_back = new SelectSocketMonitorImpCallBack(NULL);
 		m_conn_list = new std::vector<Connection>();
 		FD_ZERO(&m_master_fd);
 		FD_ZERO(&m_read_fd);
@@ -26,46 +36,37 @@ namespace CppSocket
         m_time_out.tv_usec = 100;
 	}
     
-    void Select::setCallBack(SelectCallBack* call_back_in)
-    {
-        delete m_call_back;
-        m_call_back = call_back_in;
-    }
 
-	void Select::update()
+
+	void SelectSocketMonitorImp::checkUpdate()
 	{
 		callSocketLoop();
 	}
     
-    void Select::setSelectTimeOut(int mili_sec)
+	void SelectSocketMonitorImp::setTimeOut(const int& mili_sec)//sets the time out before the function will return when callSocketLoop() is run.
     {
-        int seconds = 0;
-        while(mili_sec >= 1000)
-        {
-            mili_sec -= 1000;
-            seconds++;
-        }
-        m_time_out.tv_sec = seconds;
+
+		m_time_out.tv_sec = ((mili_sec - (mili_sec % 1000)) / 1000);
         m_time_out.tv_usec = mili_sec%1000;
 #ifdef _DEBUG
         std::cout << std::endl << "tv_sec: " << m_time_out.tv_sec << " t.tv_usec: " << m_time_out.tv_usec;
 #endif
     }
 
-    void Select::sendAll(SocketMessage msg_in, Connection except)
+    void SelectSocketMonitorImp::sendAll(SocketMessage* msg_in, Connection except)
     {
         if(!m_conn_list->empty())
         {   
         for (auto iter = m_conn_list->begin(); iter != m_conn_list->end(); iter++)
-            if(*iter != except)
-                iter->sendMessage(msg_in);
+            if(iter->getSocket() != except.getSocket())
+                iter->sendMessage(*msg_in);
         }
 //            
         
     }
     
     
-	void Select::callSocketLoop()
+	void SelectSocketMonitorImp::callSocketLoop()
 	{	
         m_read_fd = m_master_fd;
         timeval t;
@@ -85,8 +86,8 @@ namespace CppSocket
 
             if (static_cast<int>(tmp.getSocket()) > -1) 
             {
-                m_call_back->onAccpet(tmp);
-                accpetSocket(tmp);
+				m_call_back->onAccpet(m_socket_monitor, tmp);
+                addSocket(tmp);
             }
         }
         if(!m_conn_list->empty())
@@ -94,19 +95,19 @@ namespace CppSocket
             for (m_iter_conn_list = new std::vector<Connection>::iterator(m_conn_list->begin()); (*m_iter_conn_list) != m_conn_list->end(); (*m_iter_conn_list)++) 
             {
               //  std::cout << "past for" << std::endl;
-                CppSocket::SocketMessage msg;
+                std::string msg;
                 if (FD_ISSET((*m_iter_conn_list)->getSocket(), &m_read_fd))
                 {
                    // std::cout << "past FD_ISSET 2" << std::endl;
                     if ((*m_iter_conn_list)->recvMessage(msg) == 0)
                     {          
-                        m_call_back->onRemove(**m_iter_conn_list);
+						m_call_back->onRemove(m_socket_monitor, **m_iter_conn_list);
                         removeSocket(*m_iter_conn_list);
                         break;
                     }
-                    if (msg.getLen() > 0)
+                    if (msg.length() > 0)
                     {
-                        m_call_back->onMessage(msg, **m_iter_conn_list);
+						m_call_back->onMessage(m_socket_monitor, **m_iter_conn_list, msg);
                     }
                 }
                // std::cout << "left for" << std::endl;
@@ -115,24 +116,26 @@ namespace CppSocket
         return;
 	}
     
-    void Select::accpetSocket(Connection socket_in)
+    bool SelectSocketMonitorImp::addSocket(Connection socket_in)
     {
-        FD_SET(socket_in.getSocket(), &m_master_fd);
+		//Connection tmp = socket_in;
+		FD_SET(socket_in.getSocket(), &m_master_fd);
         
-        m_conn_list->push_back(socket_in);
-        if (socket_in.getSocket() > m_max_len)
+		m_conn_list->push_back(socket_in);
+		if (socket_in.getSocket() > m_max_len)
         {
-            m_max_len = socket_in.getSocket();
+			m_max_len = socket_in.getSocket();
         }
         m_iter_conn_list = new std::vector<Connection>::iterator(m_conn_list->begin());
+		return true;
     }
     
-    void Select::removeSocket(Connection socket_in)
+    bool SelectSocketMonitorImp::removeSocket(Connection socket_in)
     {
-        ;//for(auto iter = m_conn_list->start  // TODO: create and finish this
+        return true;//for(auto iter = m_conn_list->start  // TODO: create and finish this
     }
     
-    void Select::removeSocket(std::vector<Connection>::iterator socket_iter_in)
+    void SelectSocketMonitorImp::removeSocket(std::vector<Connection>::iterator socket_iter_in)
     {
         
         FD_CLR(socket_iter_in->getSocket(), &m_master_fd);

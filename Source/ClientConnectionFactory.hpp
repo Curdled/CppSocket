@@ -7,7 +7,7 @@
 
 namespace CppSocket
 {
-	class __DLL__ ClientConnectionFactory : public ConnectionFactory
+	class ClientConnectionFactory : public ConnectionFactory
 	{
 	private:
 		friend class Connection;
@@ -25,11 +25,11 @@ namespace CppSocket
 	
 		/*ClientConnectionFactory( std::string hostname_in, int port_in );
 		ClientConnectionFactory( std::string hostname_in, std::string port_in );*/
-		ClientConnectionFactory( std::string hostname_in, int port_in, SocketType::SocketTypes sock_enum_in = SocketType::SocketTypes::TCP_SOCK );
-		ClientConnectionFactory( std::string hostname_in, std::string port_in, SocketType::SocketTypes  sock_enum_in = SocketType::SocketTypes::TCP_SOCK );
-		~ClientConnectionFactory();
+		__DLL__ ClientConnectionFactory(std::string *hostname_in, int port_in, SocketType::SocketTypes sock_enum_in = SocketType::SocketTypes::TCP_SOCK);
+		__DLL__ ClientConnectionFactory(std::string *hostname_in, std::string *port_in, SocketType::SocketTypes  sock_enum_in = SocketType::SocketTypes::TCP_SOCK);
+		__DLL__ ~ClientConnectionFactory();
 
-		Connection getConnection();
+		Connection __DLL__ getConnection();
 
 	};
 };

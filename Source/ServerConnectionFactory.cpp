@@ -7,18 +7,20 @@ namespace CppSocket
     ServerConnectionFactory::ServerConnectionFactory(int port_in)
     {
         setSockType(SocketType::SocketTypes::TCP_SOCK);
-        setPort(to_string(port_in));
+		std::string port = to_string(port_in);
+		setPort(&port);
         initConstructor();
     }
 
     ServerConnectionFactory::ServerConnectionFactory(int port_in, SocketType::SocketTypes conn_type)
     {
         setSockType(conn_type);
-        setPort(to_string(port_in));
+		std::string port = to_string(port_in);
+		setPort(&port);
         initConstructor();
     }
 
-    ServerConnectionFactory::ServerConnectionFactory(std::string port_in, SocketType::SocketTypes conn_type)
+    ServerConnectionFactory::ServerConnectionFactory(std::string *port_in, SocketType::SocketTypes conn_type)
     {
         setSockType(conn_type);
         setPort(port_in);

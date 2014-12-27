@@ -18,6 +18,11 @@ namespace CppSocket
         m_sock_id = sock_in;
         m_message = new std::string(string_in);
     }
+	SocketMessage::SocketMessage(std::string str_in)
+		:m_sock_id(0)
+	{
+		m_message = new std::string(str_in);
+	}
 
     SocketMessage::~SocketMessage()
     {
@@ -28,7 +33,15 @@ namespace CppSocket
     {
         *m_message = string_in;
     }
-
+	void SocketMessage::appendMessage(std::string* msg_in)
+	{
+		
+		m_message->append(*msg_in);
+	}
+	void SocketMessage::appendMessage(std::string string_in)
+	{
+		m_message->append(std::string(string_in));
+	}
     void SocketMessage::setSock(const size_t& sock_in)
     {
         m_sock_id = sock_in;
