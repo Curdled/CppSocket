@@ -6,15 +6,6 @@ using std::endl;
 
 namespace CppSocket
 {
-	SocketMonitorCallBackCounted::SocketMonitorCallBackCounted()
-	{
-
-	}
-	SocketMonitorCallBackCounted::~SocketMonitorCallBackCounted()
-	{
-		;
-	}
-
 	int SocketMonitorCallBackCounted::onAccpet(SocketMonitor*, Connection conn_in)
 	{
 		
