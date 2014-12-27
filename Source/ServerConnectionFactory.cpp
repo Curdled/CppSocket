@@ -80,8 +80,6 @@ namespace CppSocket
             if (bind(static_cast<int>(m_sock_fd), m_pointer->ai_addr, static_cast<int>(m_pointer->ai_addrlen)) == -1)
 			{
                 shutdown(static_cast<int>(m_sock_fd), 2);
-
-                std::cout << "server: bind";
                 continue;
             }
 
@@ -97,10 +95,8 @@ namespace CppSocket
         }
 
         freeaddrinfo(m_pointer);
-        if (listen(static_cast<int>(m_sock_fd), 5) == -1)
-		{
-            std::cout << "listen";
-        }
+		if (listen(static_cast<int>(m_sock_fd), 5) == -1)
+			return;
 
     }
 }

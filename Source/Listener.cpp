@@ -11,7 +11,6 @@ namespace CppSocket
 
 	void Listener::closeSocket()
 	{
-		std::cout << "closing Listener" << std::endl;
 		close(static_cast<int>(m_sock_fd));
 		m_sock_fd = 0;
 	}

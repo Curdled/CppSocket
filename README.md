@@ -20,3 +20,5 @@ This library can use the select POSIX function http://en.wikipedia.org/wiki/Sele
 I am working to get this working with both epoll and kqueue working too.
 
 
+I also included unit tests for Counted Data parser.
+

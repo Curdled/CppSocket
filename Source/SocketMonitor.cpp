@@ -35,8 +35,8 @@ namespace CppSocket
 	{
 		m_socket_monitor->sendAll(msg_in, except);
 	}
-	//void sendAll(SocketMessage msg_in,std::vector<Connection> except); // TODO same as above except list of conns to not send to
-	//bool changeListener(const Listener& listener_in);
+
+
 	bool SocketMonitor::addSocket(const Connection& socket_in)
 	{
 		return m_socket_monitor->addSocket(socket_in);

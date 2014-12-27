@@ -9,7 +9,6 @@ namespace CppSocket
     }
 	SocketMonitorCallBack::~SocketMonitorCallBack()
 	{
-		std::cout << "decon SocketMonitorCallBack" << std::endl;
 	}
 	int SocketMonitorCallBack::onAccpet(SocketMonitor*, Connection conn_in)
     {
