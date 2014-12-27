@@ -8,19 +8,17 @@ namespace CppSocket
 {
 	SocketMonitorCallBackCounted::SocketMonitorCallBackCounted()
 	{
-		//all = new std::map<Connection, CountedDataParser>();
+
 	}
 	SocketMonitorCallBackCounted::~SocketMonitorCallBackCounted()
 	{
-		//delete all;
-		//std::cout << "decon SocketMonitorCallBackCounted and all" << std::endl;
+		;
 	}
 
 	int SocketMonitorCallBackCounted::onAccpet(SocketMonitor*, Connection conn_in)
 	{
 		
 		all.insert(std::pair<Connection, CountedDataParser>(conn_in, CountedDataParser()));
-		//std::cout << "added connection: " << conn_in.getSocket() << std::endl;
 		return 0;
 	}
 
@@ -29,10 +27,7 @@ namespace CppSocket
 		auto parser = all.at(conn_in);
 		parser.appendCountedData(msg_in);
 		if (parser.checkAllData())
-		{
-			//std::cout <<  << std::endl;
 			conn_in.sendMessage(*parser.getDataPacket());
-		}
 		
 		all.at(conn_in) = parser;
 		return 0;
