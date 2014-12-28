@@ -2,7 +2,7 @@ CppSocket
 
 This is a C++ Networking Abstraction that should work on Windows (MSVC 12), OS X and Linux (Ubuntu 14.04).
 
-This is a C++ library that I created to learn BSD-Socket and WinSock. 
+This is a C++ library that was created as a learning process BSD-Socket and WinSock and should not be used for production. 
 This uses the Decorator pattern so select or epoll or any other implementation of a server could be used
 
 ````C++
@@ -11,14 +11,15 @@ SocketMonitor monitor;
 monitor.setSocketMonitorImp(&imp);
 ````
   
-I also created a callback system
+There is also a callback system,
 This is an implemenation of SocketMonitor that uses a simple Counted message format with checking of the
 inital length so tcp doens't break up the packets unexpectedly,
-I have successfully send both binary and ascii files using this to a server and send >4GB files.
+It has successfully send both binary and ascii files using the client functionality to a server using
+SocketMonitorCallBackCounted and send >4GB files.
 https://github.com/Curdled/CppSocket/blob/master/Source/SocketMonitorCallBackCounted.cpp
   
 https://github.com/Curdled/CppSocket/blob/master/Source/CountedDataParser.hpp
-which I created and wrote unit test for.
+Which was created and unit tested.
 I am working to get this working with both epoll and kqueue working too.
 
 
