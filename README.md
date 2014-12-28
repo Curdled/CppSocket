@@ -1,8 +1,10 @@
 CppSocket
 
+TODO: add exception where needed
+
 This is a C++ Networking Abstraction that should work on Windows (MSVC 12), OS X and Linux (Ubuntu 14.04).
 
-This is a C++ library that was created as a learning process BSD-Socket and WinSock and should not be used for production. 
+This was created as a learning process BSD-Socket and WinSock and should not be used for production. 
 This uses the Decorator pattern so select or epoll or any other implementation of a server could be used.
 
 ````C++
