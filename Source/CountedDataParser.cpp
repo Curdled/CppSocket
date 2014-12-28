@@ -106,6 +106,7 @@ namespace CppSocket
 		}
 	}
 
+
 	uint32_t CountedDataParser::getLength()
 	{
 		return m_length;

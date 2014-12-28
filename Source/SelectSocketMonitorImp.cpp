@@ -49,7 +49,7 @@ namespace CppSocket
 		m_time_out.tv_sec = ((mili_sec - (mili_sec % 1000)) / 1000);
         m_time_out.tv_usec = mili_sec%1000;
 #ifdef _DEBUG
-        std::cout << std::endl << "tv_sec: " << m_time_out.tv_sec << " t.tv_usec: " << m_time_out.tv_usec;
+        std::cerr << std::endl << "tv_sec: " << m_time_out.tv_sec << " t.tv_usec: " << m_time_out.tv_usec;
 #endif
     }
 
@@ -74,14 +74,12 @@ namespace CppSocket
         if (select(static_cast<int> (m_max_len+1), &m_read_fd, NULL, NULL, &t) == -1) 
         {
     #ifdef _DEBUG
-            std::cout << "select: " << errno << std::endl;
+            std::cerr << "select: " << errno << std::endl;
     #endif
             return;
         }
-       // std::cout << "past select" << std::endl;
         if (FD_ISSET(m_listener.getSocket(), &m_read_fd)) 
         {
-           // std::cout << "past FD_ISSET 1" << std::endl;
             Connection tmp = m_listener.getConnection();
 
             if (static_cast<int>(tmp.getSocket()) > -1) 
@@ -94,11 +92,9 @@ namespace CppSocket
         {
             for (m_iter_conn_list = new std::vector<Connection>::iterator(m_conn_list->begin()); (*m_iter_conn_list) != m_conn_list->end(); (*m_iter_conn_list)++) 
             {
-              //  std::cout << "past for" << std::endl;
                 std::string msg;
                 if (FD_ISSET((*m_iter_conn_list)->getSocket(), &m_read_fd))
                 {
-                   // std::cout << "past FD_ISSET 2" << std::endl;
                     if ((*m_iter_conn_list)->recvMessage(msg) == 0)
                     {          
 						m_call_back->onRemove(m_socket_monitor, **m_iter_conn_list);
@@ -110,7 +106,6 @@ namespace CppSocket
 						m_call_back->onMessage(m_socket_monitor, **m_iter_conn_list, msg);
                     }
                 }
-               // std::cout << "left for" << std::endl;
             }
         }
         return;
@@ -118,7 +113,6 @@ namespace CppSocket
     
     bool SelectSocketMonitorImp::addSocket(Connection socket_in)
     {
-		//Connection tmp = socket_in;
 		FD_SET(socket_in.getSocket(), &m_master_fd);
         
 		m_conn_list->push_back(socket_in);
@@ -132,7 +126,7 @@ namespace CppSocket
     
     bool SelectSocketMonitorImp::removeSocket(Connection socket_in)
     {
-        return true;//for(auto iter = m_conn_list->start  // TODO: create and finish this
+        return true;// TODO: create and finish this
     }
     
     void SelectSocketMonitorImp::removeSocket(std::vector<Connection>::iterator socket_iter_in)

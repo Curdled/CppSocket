@@ -59,7 +59,7 @@ namespace CppSocket
     #endif
         if ((m_status = getaddrinfo(NULL, getPort().c_str(), &m_hints, &m_result)) != 0) 
 		{
-            std::cout << "getaddrinfo: " << gai_strerror(m_status) << std::endl;
+            std::cerr << "getaddrinfo: " << gai_strerror(m_status) << std::endl;
 
         }
 
@@ -67,13 +67,13 @@ namespace CppSocket
 		{
             if ((m_sock_fd = socket(m_pointer->ai_family, m_pointer->ai_socktype, m_pointer->ai_protocol)) == static_cast<size_t>(-1)) 
 			{
-                std::cout <<"server: socket";
+                std::cerr <<"server: socket";
                 continue;
             }
 
         if (setsockopt(static_cast<int>(m_sock_fd), SOL_SOCKET, SO_REUSEADDR, setsockopt_cross, sizeof(int)) == -1)
             {
-                std::cout << "setsockopt";
+                std::cerr << "setsockopt";
                 exit(1);
             }
 
@@ -89,7 +89,7 @@ namespace CppSocket
         if (m_pointer == NULL)  
 		{
     #ifdef _DEBUG
-            std::cout << "server: failed to bind" << std::endl;
+            std::cerr << "server: failed to bind" << std::endl;
     #endif
             m_sock_fd = 0;
         }

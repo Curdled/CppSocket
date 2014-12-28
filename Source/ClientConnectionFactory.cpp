@@ -59,7 +59,7 @@ namespace CppSocket
         if ((m_status = getaddrinfo(getHost().c_str(), getPort().c_str(), &m_hints, &m_res)) != 0)
         {
     #ifdef _DEBUG
-            std::cout << "getaddrinfo" << std::endl;
+            std::cerr << "getaddrinfo" << std::endl;
     #endif
         }
         for( m_p = m_res; m_p != NULL; m_p = m_p->ai_next )
@@ -67,7 +67,7 @@ namespace CppSocket
             if (( m_sock_fd = socket(m_p->ai_family, m_p->ai_socktype, m_p->ai_protocol )) == -1 )
             {
     #ifdef _DEBUG
-                std::cout << "socket:" << std::endl;
+                std::cerr << "socket:" << std::endl;
     #endif
                 continue;
             }
@@ -75,7 +75,7 @@ namespace CppSocket
             if ( connect ( m_sock_fd, m_p->ai_addr,static_cast<int>( m_p->ai_addrlen) ) == -1 )
             {
     #ifdef _DEBUG
-                std::cout << "connect:" << std::endl;
+                std::cerr << "connect:" << std::endl;
     #endif
                 close(m_sock_fd);
                 continue;
@@ -85,7 +85,7 @@ namespace CppSocket
         if(m_p == NULL)
         {
     #ifdef _DEBUG
-        std::cout << "failed";
+        std::cerr << "failed";
     #endif
         m_sock_fd =  0;
         }

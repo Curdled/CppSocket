@@ -3,13 +3,6 @@
 
 namespace CppSocket
 {
-	SocketMonitorCallBack::SocketMonitorCallBack()
-    {
-		;
-    }
-	SocketMonitorCallBack::~SocketMonitorCallBack()
-	{
-	}
 	int SocketMonitorCallBack::onAccpet(SocketMonitor*, Connection conn_in)
     {
         return 0;

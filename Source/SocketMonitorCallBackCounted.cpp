@@ -1,14 +1,12 @@
 #include "SocketMonitorCallBackCounted.hpp"
 
-using std::cout;
-using std::endl;
+
 
 
 namespace CppSocket
 {
 	int SocketMonitorCallBackCounted::onAccpet(SocketMonitor*, Connection conn_in)
 	{
-		
 		all.insert(std::pair<Connection, CountedDataParser>(conn_in, CountedDataParser()));
 		return 0;
 	}

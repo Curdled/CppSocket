@@ -15,7 +15,6 @@ namespace CppSocket
 	void SocketMonitor::setSocketMonitorImp(SocketMonitorImp *call_back_in)
     {
         m_socket_monitor = call_back_in;
-		//m_socket_monitor->setSocketMonitorPointer(this);
     }
 	SocketMonitor::~SocketMonitor()
 	{

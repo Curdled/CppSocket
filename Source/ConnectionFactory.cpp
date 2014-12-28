@@ -12,7 +12,7 @@ namespace CppSocket
         iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
         if (iResult != 0) 
         {
-            std::cout << "WSAStartup failed: " << iResult << std::endl;
+            std::cerr << "WSAStartup failed: " << iResult << std::endl;
         }
     #endif
     }
