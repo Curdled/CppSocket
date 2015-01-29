@@ -6,6 +6,7 @@ namespace CppSocket
     ConnectionFactory::ConnectionFactory( )
     {
     #ifdef _WIN32
+        //only need to peform this check on windows... Where the _WIN32 symbol is defined
         int iResult;
         WSADATA wsaData;
 

@@ -31,7 +31,7 @@ namespace CppSocket
     {
         setAddrInfo();
         getAddrInfo();
-        return *new Listener(m_sock_fd);
+        return *(new Listener(m_sock_fd));
     }
 
     void ServerConnectionFactory::initConstructor()

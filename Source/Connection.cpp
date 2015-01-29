@@ -79,6 +79,7 @@ namespace CppSocket
         str_in[1] = (msg >> 16) & 0xFF;
         str_in[2] = (msg >> 8) & 0xFF;
         str_in[3] = msg & 0xFF;
+        //This will back a 32 bit int to 4 chars stored into a string.
 		return static_cast<int>(send(static_cast<int>(m_sock_fd), &str_in[0], static_cast<int>(sizeof(uint32_t)), 0));
 	}
 
@@ -182,6 +183,7 @@ namespace CppSocket
 		m_sock_fd = 0;
 	}
     
+    //Comparison operators for the Connectio class work by comparing the value for socket file handler.
     bool Connection::operator !=(Connection c_in)
     {
 		return !(this->m_sock_fd == c_in.m_sock_fd);
