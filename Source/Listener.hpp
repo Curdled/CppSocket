@@ -16,8 +16,8 @@ namespace CppSocket
 	public:
 		Listener();
 		Connection getConnection();
-		void closeSocket();
-		size_t getSocket(){return m_sock_fd;};
+		void closeSocket();//must be called before the Listner is delete or does out of scope.
+		size_t getSocket(){return m_sock_fd;};//get the socket handler.
 	private:
 		
 		Listener(size_t sock_in){m_sock_fd = sock_in;};

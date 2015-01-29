@@ -32,7 +32,10 @@ namespace CppSocket
 	private:
 		void getLengthFromCount();
 
+        //the data as recieve from the socket.
 		std::string m_data;
+        
+        //the length of the packet calculated from the first 4 bytes of the message recieved.
 		uint32_t m_length;
 	};
 };

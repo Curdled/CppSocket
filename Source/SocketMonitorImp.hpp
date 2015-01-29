@@ -20,8 +20,9 @@ namespace CppSocket
 		void virtual setTimeOut(const int& mili_sec) = 0;
 
 		void virtual sendAll(SocketMessage* msg_in, Connection except) = 0; // will send msg_in to all connection unless connection excpet is specified
-		//void sendAll(SocketMessage msg_in,std::vector<Connection> except); // TODO same as above except list of conns to not send to
-		//bool virtual changeListener(const Listener& listener_in) override;
+        
+        // TODO same as above except list of conns to not send to a list of connections.
+		
 		bool virtual addSocket(Connection socket_in) = 0;
 		bool virtual removeSocket(Connection socket_in) = 0;
 	};
