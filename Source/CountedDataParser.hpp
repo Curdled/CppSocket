@@ -18,11 +18,17 @@ namespace CppSocket
 		void __DLL__ setCountedData(std::string *data_in);
 		void __DLL__ appendCountedData(std::string *data_appended);
 		void __DLL__ appendCountedData(std::string data_appended);
+        
+        //gets the length of the current packet or  if not data has been recieve this will return 0.
 		uint32_t __DLL__ getLength();
+        //return the number of bytes that need to be recieve until the full pack has been recieved
 		uint32_t __DLL__ getRemaining();
-		std::string __DLL__ *getData();
+		std::string __DLL__ *getData();//return the data in the parser
+        
+        //returns the whole packet or the emty string is the packet is not complete in the parser.
 		std::string __DLL__ *getDataPacket();
-			bool __DLL__ checkAllData();
+        bool __DLL__ checkAllData();
+        
 	private:
 		void getLengthFromCount();
 
